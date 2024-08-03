@@ -80,7 +80,7 @@ export default function Navigation() {
                     )}
                 </div>
 
-                <Link to="/me" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
+                <Link to="/users/me" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
                     Profile
                 </Link>
 

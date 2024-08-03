@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Login from "./Login";
 
 export default function NavUser() {
     let [isLoggedIn, setIsLoggedIn] = useState(true);
+    let [openLoginTab,setOpenLoginTab] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -15,6 +17,14 @@ export default function NavUser() {
         })()
             ;
     }, []);
+
+    function OpenLoginTab(){
+        setOpenLoginTab(true);
+    }
+
+    function closeLoginTab(){
+        setOpenLoginTab(false);
+    }
 
     return (
         <>
@@ -30,7 +40,7 @@ export default function NavUser() {
                                 />
                             </Link>
                             <div className="text-sm">
-                                <Link to="/user/me" className="font-bold text-green-600">John Doe</Link>
+                                <Link to="/users/me" className="font-bold text-green-600">John Doe</Link>
                                 <div className="text-gray-400">john.doe@example.com</div>
                             </div>
                         </div>
@@ -48,11 +58,13 @@ export default function NavUser() {
                         </Link>
                     </div>) :
                     (<div className="p-4 border-t border-gray-200 flex items-center justify-center">
-                        <Link to="/user/login" className="text-pink-500 hover:text-pink-700 font-bold">
+                        <button onClick={OpenLoginTab} className="text-pink-500 hover:text-pink-700 font-bold">
                             Login
-                        </Link>
+                        </button>
                     </div>)
             }
+
+            <Login isVisible={openLoginTab} closeFunc={closeLoginTab} />
         </>
     )
 }
