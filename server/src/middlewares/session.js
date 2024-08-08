@@ -1,23 +1,18 @@
-const {verifyToken} = require("../services/token");
+const { verifyToken } = require("../services/token");
 
-function session(){
-    return function (req,res,next){
-        let token = req.cookies.token;
+function session() {
+    return function (req, res, next) {
+        let token = req.headers["Auth-Token"];
 
-        if(token){
-            try {
-                let payload = verifyToken(token);
-                req.user = payload;                
-                res.locals.hasUser = true;
-            } catch (error) {
-                res.clearCookie("token");
-            }
+        if (token) {
+            let payload = verifyToken(token);
+            req.user = payload || undefined;
         }
 
         next();
     }
 }
 
-module.exports ={
+module.exports = {
     session
 }

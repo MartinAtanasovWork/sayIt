@@ -18,7 +18,8 @@ export default function Login({ isVisible, closeFunc }) {
     function submitFormHandler(event){
         event.preventDefault();
 
-        
+        console.log(email,password);
+                
     }
 
     return (
@@ -108,7 +109,7 @@ export default function Login({ isVisible, closeFunc }) {
                                 Sign in
                             </button>
                             <p className="text-center text-sm text-gray-500">
-                                No account? <Link to="/register" className="underline text-blue-900" >Sign up</Link>
+                                No account? <Link to="/register" className="underline text-blue-900" onClick={closeFunc}>Sign up</Link>
                             </p>
                         </form>
                     </div>
