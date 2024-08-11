@@ -4,14 +4,9 @@ import NavUser from "./NavUser";
 
 export default function Navigation() {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const [isPolicyOpen, setIsPolicyOpen] = useState(false);
 
     function toggleSettings() {
         setIsSettingsOpen(oldSettings => !oldSettings);
-    }
-
-    function togglePolicy() {
-        setIsPolicyOpen(oldPolicy => !oldPolicy);
     }
 
     return (
@@ -33,11 +28,11 @@ export default function Navigation() {
 
             {/* Navigation Links */}
             <nav className="flex flex-grow flex-col p-4 space-y-2">
-                <Link to="/most-liked" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
-                    Most Liked
+                <Link to="/popular" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
+                    Popular
                 </Link>
-                <Link to="/liked-by-you" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
-                    Liked by you
+                <Link to="/liked" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
+                    Liked posts
                 </Link>
 
                 {/* Settings */}
@@ -79,44 +74,11 @@ export default function Navigation() {
                         </div>
                     )}
                 </div>
-
-                <Link to="/users/me" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
-                    Profile
-                </Link>
-
+               
                 {/* Policy */}
-                <div className="relative">
-                    <button
-                        onClick={togglePolicy}
-                        className="w-full text-left hover:bg-green-100 hover:text-green-600 p-2 rounded flex items-center justify-between"
-                    >
-                        <span>Policy</span>
-                        <svg
-                            className={`transform transition-transform duration-200 ${isPolicyOpen ? 'rotate-180' : 'rotate-0'}`}
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            width="16"
-                            height="16"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    {isPolicyOpen && (
-                        <div className="mt-2 space-y-2 pl-4">
-                            <Link to="/policy/content-policy" className="block hover:bg-green-100 hover:text-green-600 p-2 rounded">
-                                Content Policy
-                            </Link>
-                            <Link to="/policy/privacy-policy" className="block hover:bg-green-100 hover:text-green-600 p-2 rounded">
-                                Privacy Policy
-                            </Link>
-                            <Link to="/policy/user-policy" className="block hover:bg-green-100 hover:text-green-600 p-2 rounded">
-                                User Policy
-                            </Link>
-                        </div>
-                    )}
-                </div>
+                <Link to="/policy" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
+                    Policy
+                </Link>
             </nav>
 
             {/* User */}

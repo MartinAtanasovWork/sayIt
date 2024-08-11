@@ -3,6 +3,7 @@ const { expressConfig } = require("./config/express");
 
 const { databaseConfig } = require("./config/database");
 const { router } = require("./config/routes");
+const { create } = require("./services/article");
 
 async function start() {
     let app = express();
@@ -10,7 +11,7 @@ async function start() {
     await databaseConfig();
     expressConfig(app);
     app.use(router);
-
+    
     app.listen(3000, () => {
         console.log("started");
     })

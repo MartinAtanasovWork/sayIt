@@ -3,23 +3,16 @@ import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
 export default function Login({ isVisible, closeFunc }) {
-    let [email,setEmail] = useState("");
-    let [password,setPassword] = useState("");
+    let [email, setEmail] = useState("");
+    let [password, setPassword] = useState("");
 
-    if(!isVisible) return null;
-    
-    function changeEmailHandler(event){
+    if (!isVisible) return null;
+
+    function changeEmailHandler(event) {
         setEmail(event.target.value);
     }
-    function changePasswordHandler(event){
+    function changePasswordHandler(event) {
         setPassword(event.target.value);
-    }
-
-    function submitFormHandler(event){
-        event.preventDefault();
-
-        console.log(email,password);
-                
     }
 
     return (
@@ -36,9 +29,9 @@ export default function Login({ isVisible, closeFunc }) {
                             </button>
                         </div>
                         <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
-                        By continuing, you agree to our <Link to="/policy/user-policy" className="underline text-blue-900">User Policy</Link> and acknowledge that you understand the <Link to="/policy/privacy-policy" className="underline text-blue-900">Privacy Policy</Link>.
+                            By continuing, you agree to our User Policy and acknowledge that you understand the Privacy Policy.You can see our policies <Link to="/policy" onClick={closeFunc} className="underline text-blue-900">here</Link>.
                         </p>
-                        <form onClick={submitFormHandler} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
+                        <form className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
                             <p className="text-center text-lg font-medium">Sign in to your account</p>
                             <div>
                                 <label htmlFor="email" className="sr-only">Email</label>
@@ -104,7 +97,7 @@ export default function Login({ isVisible, closeFunc }) {
                             </div>
                             <button
                                 type="submit"
-                                className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"                                
+                                className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
                             >
                                 Sign in
                             </button>

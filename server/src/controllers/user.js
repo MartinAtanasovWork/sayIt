@@ -6,9 +6,9 @@ async function loginController(req, res) {
 
     let result = await login(email, password);
     
-    if(!result.error){
-        let token = createToken(result);
-        res.set("Auth-Token",token);
+    if(result.error){
+       // let token = createToken(result);
+        res.set("Auth-Token","aaa");
     }
 
     res.json(result);

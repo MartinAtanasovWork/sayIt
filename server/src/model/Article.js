@@ -12,9 +12,17 @@ const schema = new mongoose.Schema({
         type:String,
         required:true
     },
+    topics:{
+        type: [],
+        required: true
+    },
     author:{
         type: mongoose.Types.ObjectId,
         required: true
+    },
+    created:{
+        type:String,
+        required:true
     }    
 },
 {

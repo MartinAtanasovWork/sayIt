@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Login from "./Login";
+import Login from "../Login/Login";
 
 export default function NavUser() {
     let [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -57,11 +57,15 @@ export default function NavUser() {
                             </svg>
                         </Link>
                     </div>) :
-                    (<div className="p-4 border-t border-gray-200 flex items-center justify-center">
-                        <button onClick={OpenLoginTab} className="text-pink-500 hover:text-pink-700 font-bold">
-                            Login
+                    (<div className="p-4 border-t border-gray-200 flex items-center justify-between">
+                        <button onClick={OpenLoginTab} className="text-pink-500 hover:text-pink-700 font-bold flex-1 text-center">
+                          Login
                         </button>
-                    </div>)
+                        <Link to="/register" className="text-pink-500 hover:text-pink-700 font-bold flex-1 text-center">
+                          Sign up
+                        </Link>
+                      </div>
+                      )
             }
 
             <Login isVisible={openLoginTab} closeFunc={closeLoginTab} />

@@ -1,8 +1,24 @@
-const { create, update, deleteArticle, getArticlebyID } = require("../services/article");
+const { create, update, deleteArticle, getArticlebyID, getArticles } = require("../services/article");
+
+async function getArticlesController(req,res) {
+    let articles = await getArticles();
+    
+    res.json(articles);
+    res.end();
+}
+
+async function getArticlebyIDContoller(req,res) {
+    let articleId = req.params.articleId;
+    
+    let article = await getArticlebyID(articleId);
+
+    res.json(article);
+    res.end();
+}
 
 async function createController(req, res) {
-    let data = req.body;
-
+    let data = req.body;    
+    
     let article = await create(data);
 
     res.status(201);
@@ -47,6 +63,8 @@ async function deleteController(req, res) {
 }
 
 module.exports = {
+    getArticlesController,
+    getArticlebyIDContoller,
     createController,
     updateController,
     deleteController

@@ -1,5 +1,11 @@
 const { Article } = require("../model/Article");
 
+async function getArticles() {
+    let articles = await Article.find({});
+
+    return articles;
+}
+
 async function getArticlebyID(articleId) {
     let article = await Article.find({ _id: articleId });
 
@@ -7,6 +13,9 @@ async function getArticlebyID(articleId) {
 }
 
 async function create(articleInfo) {
+    let created = Date.now(); 
+    articleInfo.created = created;
+
     let newArticle = new Article(articleInfo);
 
     let createdArticle = await newArticle.save();
@@ -26,5 +35,6 @@ module.exports = {
     create,
     update,
     deleteArticle,
-    getArticlebyID
+    getArticlebyID,
+    getArticles
 }
