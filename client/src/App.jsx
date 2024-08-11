@@ -8,6 +8,8 @@ import Policy from "./components/Policies/Policy";
 import Topic from "./components/Topics/Topic";
 import ArticleDetails from "./components/Articles/ArticleDetails";
 import NotFound from "./components/NotFound/NotFound";
+import UpdateArticle from "./components/Articles/UpdateArticle";
+import CreateArticle from "./components/Articles/CreateArticle";
 
 function App() {
     return (
@@ -19,11 +21,16 @@ function App() {
                     <Route path="/" element={<Home show="all" />} />
                     <Route path="/popular" element={<Home show="popular" />} />
                     <Route path="/liked" element={<Home show="liked" />} />
+                    <Route path="/topics/:topic" element={<Topic />} />
+                    <Route path="/policy" element={<Policy />} />
+
                     <Route path="/login" element={<Login />} />
                     <Route path="register" element={<Register />} />
-                    <Route path="/policy" element={<Policy />} />
-                    <Route path="/topics/:topic" element={<Topic />} />
+
                     <Route path="/articles/details/:articleId" element={<ArticleDetails />} />
+                    <Route path="/articles/create" element={<CreateArticle />} />
+                    <Route path="/articles/edit/:articleId" element={<UpdateArticle />} />
+
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>

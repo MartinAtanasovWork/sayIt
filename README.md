@@ -8,19 +8,21 @@
 -[X] articles
    -[X] withImage  
    -[X] withOutImage 
-   -[X] detailsArticle  
+   -[X] detailsArticle
+   -[] createArticle - later
+   -[] updataArticle - later
 -[X] Not Found   
 
 ## Routing
--[] Basic paths
-   -[] home
-   -[] register 
-   -[] policy 
--[] Params paths
-   -[] categories
-   -[] details
-   -[] updateArticle - later
-   -[] deleteArticle - later
+-[X] Basic paths
+   -[X] home
+   -[X] register 
+   -[X] policy 
+-[X] Params paths
+   -[X] categories
+   -[X] details
+   -[X] updateArticle - later
+   -[X] deleteArticle - later
    
 ## API
 -[] requester
@@ -41,6 +43,11 @@
 -[] useCreateArtilce - later
 -[] useAuthentication
 -[] useValidation
+
+## Articles
+-[] Create
+-[] Update
+-[] Delete
 
 ## Contexts
 -[] Auth
