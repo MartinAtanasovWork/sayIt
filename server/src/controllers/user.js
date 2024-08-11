@@ -1,5 +1,5 @@
 const { createToken, createLogoutToken } = require("../services/token");
-const { login, register } = require("../services/user");
+const { login, register, logout } = require("../services/user");
 
 async function loginController(req, res) {
     let { email, password } = req.body;
@@ -30,9 +30,11 @@ async function registerController(req, res) {
 }
 
 async function logoutController(req,res){
-    let newToken = createLogoutToken(req.body.user);
-    
-    res.set("Auth-Token",newToken);
+    let token = req.headers["auth-token"];;
+
+    logout(token);
+
+    res.status(200);
     res.end();
 }
 

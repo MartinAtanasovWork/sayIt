@@ -1,5 +1,6 @@
 const { User } = require("../model/User");
 const bcrypt = require("bcrypt");
+const { invalidateToken } = require("./token");
 
 async function register(email,password){
     let user = await User.findOne({email});
@@ -32,7 +33,12 @@ async function login(email,password){
     return user;
 }
 
+function logout(token){
+    invalidateToken(token);
+}
+
 module.exports = {
     register,
-    login
+    login,
+    logout    
 }

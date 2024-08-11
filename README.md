@@ -9,8 +9,8 @@
    -[X] withImage  
    -[X] withOutImage 
    -[X] detailsArticle
-   -[] createArticle - later
-   -[] updataArticle - later
+   -[X] createArticle - later
+   -[X] updataArticle - later
 -[X] Not Found   
 
 ## Routing
@@ -25,10 +25,10 @@
    -[X] deleteArticle - later
    
 ## API
--[] requester
--[] articles 
+-[X] requester
+-[X] articles 
 -[] comments - later
--[] authentication
+-[X] authentication
 
 ## Functionalities 
 -[] basic
@@ -51,6 +51,7 @@
 
 ## Contexts
 -[] Auth
+-[] Change Request to add token if exists 
 
 ## Authentication
 -[] login

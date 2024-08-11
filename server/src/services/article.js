@@ -24,7 +24,9 @@ async function create(articleInfo) {
 }
 
 async function update(updatedInfo, articleId) {
-    await Article.findOneAndUpdate({ _id: articleId }, updatedInfo);
+   let updatedArticle = await Article.findOneAndUpdate({ _id: articleId }, updatedInfo);
+
+   return updatedArticle;
 }
 
 async function deleteArticle(articleId) {

@@ -38,9 +38,10 @@ async function updateController(req, res) {
         res.end();
     }
 
-    await update(req.body, articleId);
+    let updatedArticle = await update(req.body, articleId);
 
-    res.status(204)  
+    res.status(204)
+    res.json(updatedArticle);  
     res.end();
 }
 
