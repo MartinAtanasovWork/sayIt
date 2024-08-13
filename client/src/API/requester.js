@@ -35,7 +35,7 @@ async function put(url,body,token){
         body:JSON.stringify(body)
     }
 
-    let request = await fetch(url,requestInfo);
+    let request = await fetch(url,requestInfo); 
     let data = await request.json();
    
     return data;
@@ -48,11 +48,8 @@ async function del(url,token){
         method:"delete",
         headers:{...tokenHeader}
     }
-
-    let request = await fetch(url,requestInfo);
-    let data = await request.json();
-   
-    return data;
+    
+    await fetch(url,requestInfo);  
 } 
 
 let requesterAPI = {

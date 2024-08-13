@@ -27,6 +27,7 @@ function App() {
         let newData = {
             email: data.user.email,
             avatar: data.user.avatar,
+            id: data.user._id,
             token: data["Auth-Token"]
         }
 
@@ -36,6 +37,7 @@ function App() {
     let contextData = {
         email: authData.email,
         token: authData.token,
+        id: authData.id,
         avatar: authData.avatar,
         isLogged: !!authData.email,
         changeAuthData

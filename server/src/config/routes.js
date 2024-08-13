@@ -17,8 +17,8 @@ router.get("/articles/popular",getPopularArticlesController);
 router.get("/articles/saved",getSavedArticlesContoller);
 
 router.post("/articles/create",isUser,createController);
-router.post("/articles/update/:articleId",isUser,updateController);
-router.post("/articles/delete/:articleId",isUser,deleteController);
+router.put("/articles/update/:articleId",isUser,updateController);
+router.delete("/articles/delete/:articleId",isUser,deleteController);
 
 module.exports = {
     router

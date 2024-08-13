@@ -1,45 +1,45 @@
 import { useState } from 'react';
 import { useForm } from '../../hooks/useForm';
+import { useArticle } from '../../hooks/useArticle';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateArticle() {
+    let { createArticle } = useArticle();
+    let navigate = useNavigate();
+
+    async function submitCallback(values) {
+        // validate fileds and image
+
+        let result = await createArticle(values, image);
+
+        navigate("/articles/details/" + result._id);
+    }
     let { values, changeHandler, submitHandler } = useForm({
         title: "",
         content: "",
-        topic: ""
-    });
-    const [title, setTitle] = useState('');
-    const [image, setImage] = useState(null);
-    const [content, setContent] = useState('');
-    const [topic, setTopic] = useState('');
+        topic: "",
+    }, submitCallback);
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        console.log(file);
+    let [image, setImage] = useState(null);
+    let [preview, setPreview] = useState("");
 
-        setImage(file);
-    };
+    function changeImage(e) {
+        setImage(e.target.files[0]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Form submission logic here
-        console.log({
-            title,
-            image,
-            content,
-            topic,
-        });
-        // Clear the form
-        setTitle('');
-        setImage(null);
-        setContent('');
-        setTopic('');
-    };
+        let file = new FileReader;
+
+        file.onload = function () {
+            setPreview(file.result);
+        }
+
+        file.readAsDataURL(e.target.files[0])
+    }
 
     return (
         <div className="bg-white text-gray-900 min-h-screen py-10 px-4">
             <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
                 <h1 className="text-3xl font-bold text-green-600 mb-6">Create New Article</h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={submitHandler}>
                     {/* Title */}
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
@@ -64,10 +64,12 @@ export default function CreateArticle() {
                         <input
                             id="image"
                             type="file"
+                            name="image"
                             accept="image/*"
-                            onChange={handleImageChange}
+                            onChange={changeImage}
                             className="w-full p-2 border border-green-600 rounded-lg focus:outline-none focus:border-green-800"
                         />
+                        <img src={preview} />
                     </div>
 
                     {/* Content */}

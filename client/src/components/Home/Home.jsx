@@ -1,11 +1,12 @@
 import ArticleWithImage from "../Articles/ArticleWithImage";
 import ArticleWithoutImage from "../Articles/ArticleWithoutImage";
-import { useHomeArticles } from "../../hooks/useArticle";
+import { useArticle } from "../../hooks/useArticle";
 
 // eslint-disable-next-line react/prop-types
 export default function Home({ show }) {
-    let articles = useHomeArticles(show);
-
+    let {homeArticles} = useArticle(show);
+    let articles = homeArticles(show);
+            
     function distributeArticles(article) {
         if (article.img) {
             return <ArticleWithImage key={article._id} article={article} />

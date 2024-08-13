@@ -43,8 +43,9 @@ async function getSavedArticlesContoller(req,res) {
 
 async function createController(req, res) {
     let data = req.body;    
-    
-    let article = await create(data);
+    let id = req.user._id;
+
+    let article = await create(data,id);
 
     res.status(201);
     res.json(article);
@@ -55,28 +56,27 @@ async function updateController(req, res) {
     let articleId = req.params.articleId;
     let userId = req.user._id;
 
-    let article = await getArticlebyID(articleId);
-
-    if(userId != article.author){
+    let article = await getArticlebyID(articleId);  
+    
+    if(userId != article[0].author){
         res.status(403);
         res.json({ error: "Unauthorized request" });
         res.end();
     }
 
     let updatedArticle = await update(req.body, articleId);
-
-    res.status(204)
+           
     res.json(updatedArticle);  
     res.end();
 }
 
-async function deleteController(req, res) {
+async function deleteController(req, res) {    
     let articleId = req.params.articleId;
-    let userId = req.user._id;
-
+    let userId = req.user._id;   
+    
     let article = await getArticlebyID(articleId);
 
-    if(userId != article.author){
+    if(userId != article[0].author){
         res.status(403);
         res.json({ error: "Unauthorized request" });
         res.end();

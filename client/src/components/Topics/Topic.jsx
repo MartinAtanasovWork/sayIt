@@ -2,11 +2,12 @@ import { useParams } from "react-router-dom";
 
 import ArticleWithImage from "../Articles/ArticleWithImage";
 import ArticleWithoutImage from "../Articles/ArticleWithoutImage";
-import { useTopicArticles } from "../../hooks/useArticle";
+import { useArticle } from "../../hooks/useArticle";
 
 export default function Topic() {
     let { topic } = useParams();
-    let articles = useTopicArticles(topic);
+    let {topicArticles} = useArticle();
+    let articles = topicArticles(topic);
 
     function distributeArticles(article) {
         if (article.img) {

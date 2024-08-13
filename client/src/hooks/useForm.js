@@ -17,15 +17,10 @@ export function useForm(initalValues,submitCallback){
         setValues(initalValues); 
     }
 
-    function changeProperty(name,newValue) {
-        setValues(oldValues => ({...oldValues,[name]:newValue}));
-    }
-
     return{
         values,
         changeHandler,
-        submitHandler,
-        changeProperty,
-        nullateProperties
+        submitHandler,        
+        nullateProperties        
     }
 }

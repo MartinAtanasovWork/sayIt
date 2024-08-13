@@ -44,16 +44,16 @@
 -[X] useForm
 -[X] useArticles
 -[] useComment - later
--[] useCreateArtilce - later
--[] useUpdateArticle - later
--[] useDeleteArticle - later
+-[X] useCreateArtilce - later
+-[X] useUpdateArticle - later
+-[X] useDeleteArticle - later
 -[X] useAuthentication
 -[] useValidation - later
 
 ## Articles
--[] Create
--[] Update
--[] Delete
+-[X] Create
+-[X] Update
+-[X] Delete
 
 ## Authentication
 -[X] login
@@ -63,10 +63,11 @@
 ## Userbased functionality
 -[X] Dynamic navigation
 -[X] Create article
--[] Edit and Delete article
+-[X] Edit and Delete article
 -[] Save article
 
 ## Error and validation
 -[] login
 -[] register
 -[] create
+-[] edit

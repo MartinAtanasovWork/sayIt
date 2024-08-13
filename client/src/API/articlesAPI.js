@@ -32,7 +32,7 @@ async function getSaved(token) {
     return articles;
 }
 
-async function create(articleInfo,token) {
+async function create(articleInfo,token) { 
     let article = await requesterAPI.post(DEFAULT_PATH + "/create", articleInfo,token);
 
     return article;
@@ -45,10 +45,8 @@ async function update(articleId, articleInfo,token) {
 }
 
 async function del(articleId,token) {
-   let data = requesterAPI.put(DEFAULT_PATH + "/delete/" + articleId,token);
-
-   return data;
-}
+   requesterAPI.del(DEFAULT_PATH + "/delete/" + articleId,token);
+}  
 
 let articlesAPI = {
     getAll,

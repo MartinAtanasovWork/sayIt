@@ -33,11 +33,11 @@ async function getSavedArticles(userId) {
     return articles;
 }
 
-async function create(articleInfo) {
+async function create(articleInfo,userId) {
+    let author = userId;
     let created = Date.now(); 
-    articleInfo.created = created;
-
-    let newArticle = new Article(articleInfo);
+    
+    let newArticle = new Article({...articleInfo,author,created});
 
     let createdArticle = await newArticle.save();
 
