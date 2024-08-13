@@ -13,9 +13,19 @@ export function useForm(initalValues,submitCallback){
         submitCallback(values);
     }
 
+    function nullateProperties(){
+        setValues(initalValues); 
+    }
+
+    function changeProperty(name,newValue) {
+        setValues(oldValues => ({...oldValues,[name]:newValue}));
+    }
+
     return{
         values,
         changeHandler,
-        submitHandler
+        submitHandler,
+        changeProperty,
+        nullateProperties
     }
 }

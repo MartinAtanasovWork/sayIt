@@ -6,7 +6,8 @@ const schema = new mongoose.Schema({
         required: true
     },   
     img:{
-        type: String,       
+        type: String,
+        required: true       
     },
     content:{
         type:String,

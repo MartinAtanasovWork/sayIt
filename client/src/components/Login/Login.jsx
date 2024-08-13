@@ -1,20 +1,30 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "../../hooks/useForm";
+import useAuthentication from "../../hooks/useAuthentication";
 
 // eslint-disable-next-line react/prop-types
 export default function Login({ isVisible, closeFunc }) {
-    let [email, setEmail] = useState("");
-    let [password, setPassword] = useState("");
+    let {login} = useAuthentication();
+    let navigate = useNavigate();
+    
+    async function submitCallback(values) {
+        // validate vlaues
 
-    if (!isVisible) return null;
-
-    function changeEmailHandler(event) {
-        setEmail(event.target.value);
+        let data = await login(values.email, values.password);  
+                  
+        if(!data.error){     
+            nullateProperties();
+            closeFunc();
+            navigate("/");
+        }
+        
+        //hnadle if register returns error in data
     }
-    function changePasswordHandler(event) {
-        setPassword(event.target.value);
-    }
 
+    let {values,changeHandler,submitHandler,nullateProperties} = useForm({email:"",password:""},submitCallback);  
+        
+    if (!isVisible) return null   
+    
     return (
         <>
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -31,7 +41,7 @@ export default function Login({ isVisible, closeFunc }) {
                         <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
                             By continuing, you agree to our User Policy and acknowledge that you understand the Privacy Policy.You can see our policies <Link to="/policy" onClick={closeFunc} className="underline text-blue-900">here</Link>.
                         </p>
-                        <form className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
+                        <form onSubmit={submitHandler} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
                             <p className="text-center text-lg font-medium">Sign in to your account</p>
                             <div>
                                 <label htmlFor="email" className="sr-only">Email</label>
@@ -39,9 +49,10 @@ export default function Login({ isVisible, closeFunc }) {
                                     <input
                                         type="email"
                                         className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                        name="email"
                                         placeholder="Enter email"
-                                        value={email}
-                                        onChange={changeEmailHandler}
+                                        value={values.email}
+                                        onChange={changeHandler}
                                     />
                                     <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                                         <svg
@@ -67,9 +78,10 @@ export default function Login({ isVisible, closeFunc }) {
                                     <input
                                         type="password"
                                         className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                        name="password"
                                         placeholder="Enter password"
-                                        value={password}
-                                        onChange={changePasswordHandler}
+                                        value={values.password}
+                                        onChange={changeHandler}
                                     />
                                     <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                                         <svg

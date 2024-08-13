@@ -1,47 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Login from "../Login/Login";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function NavUser() {
-    let [isLoggedIn, setIsLoggedIn] = useState(true);
-    let [openLoginTab,setOpenLoginTab] = useState(false);
+    let { email,avatar, isLogged } = useContext(AuthContext);
+    let [openLoginTab, setOpenLoginTab] = useState(false);
 
-    useEffect(() => {
-        (async () => {
-            let user = localStorage.getItem("Auth-Token");
-
-            // make request to check the token
-            let request = !!user;
-
-            setIsLoggedIn(request);
-        })()
-            ;
-    }, []);
-
-    function OpenLoginTab(){
+    function OpenLoginTab() {
         setOpenLoginTab(true);
     }
 
-    function closeLoginTab(){
+    function closeLoginTab() {
         setOpenLoginTab(false);
     }
 
     return (
         <>
             {
-                isLoggedIn ?
+                isLogged ?
                     (<div className="p-4 mt-5 border-t border-gray-200 flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                            <Link to="/user/me">
+                            <Link to="/users/me">
                                 <img
-                                    src="https://via.placeholder.com/40"
+                                    src={avatar}
                                     alt="User Avatar"
                                     className="w-10 h-10 rounded-full"
                                 />
                             </Link>
                             <div className="text-sm">
-                                <Link to="/users/me" className="font-bold text-green-600">John Doe</Link>
-                                <div className="text-gray-400">john.doe@example.com</div>
+                                <Link to="/users/me" className="font-bold text-green-600">{email}</Link>
                             </div>
                         </div>
                         <Link to="/users/me" className="text-pink-500 hover:text-pink-700">
@@ -59,13 +47,13 @@ export default function NavUser() {
                     </div>) :
                     (<div className="p-4 border-t border-gray-200 flex items-center justify-between">
                         <button onClick={OpenLoginTab} className="text-pink-500 hover:text-pink-700 font-bold flex-1 text-center">
-                          Login
+                            Login
                         </button>
                         <Link to="/register" className="text-pink-500 hover:text-pink-700 font-bold flex-1 text-center">
-                          Sign up
+                            Sign up
                         </Link>
-                      </div>
-                      )
+                    </div>
+                    )
             }
 
             <Login isVisible={openLoginTab} closeFunc={closeLoginTab} />

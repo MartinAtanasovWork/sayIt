@@ -1,44 +1,81 @@
 const { User } = require("../model/User");
 const bcrypt = require("bcrypt");
-const { invalidateToken } = require("./token");
+const { invalidateToken, createToken } = require("./token");
 
-async function register(email,password){
-    let user = await User.findOne({email});
+async function register(email, password) {
+    let user = await User.findOne({ email });
 
-    if(user){
-        return {error:"This email is already in use"};
+    if (user) {
+        return { error: "This email is already in use" };
     }
 
-    let newUser = new User({        
+    let newUser = new User({
         email,
-        password: await bcrypt.hash(password,10)
+        password: await bcrypt.hash(password, 10),
+        avatar:"/Avatars/avatar1.png"
     });
-   
+
     await newUser.save();
 
-    return newUser;
+    let token = createToken(newUser);
+
+    let data = {
+        user: newUser,
+        "Auth-Token": token
+    }
+
+    return data;
 }
 
-async function login(email,password){
-    let user = await User.findOne({email});
-    
-    if(!user){
-        return {error:"User doesn't exist"};
+async function login(email, password) {
+    let user = await User.findOne({ email });
+
+    if (!user) {
+        return { error: "User doesn't exist" };
     }
-      
-    if(! (await bcrypt.compare(password,user.password))){
-        return {error:"Email and password don't match"};
+
+    if (!(await bcrypt.compare(password, user.password))) {
+        return { error: "Email and password don't match" };
     }
-   
+
+    let token = createToken(user);
+
+    let data = {
+        user,
+        "Auth-Token": token
+    }
+
+    return data;
+}
+
+async function getUserById(id) {
+    let user = await User.findOne({ _id: id })
+
     return user;
 }
 
-function logout(token){
+async function updateUser(id, userData) {
+    let user = await User.findOneAndUpdate({_id:id},userData);
+    let updateUser = await User.findOne({_id:id});
+
+    let token = createToken(updateUser);
+
+    let data = {
+        user:updateUser,
+        "Auth-Token": token
+    }
+
+    return data;
+}
+
+function logout(token) {
     invalidateToken(token);
 }
 
 module.exports = {
     register,
     login,
-    logout    
+    logout,
+    getUserById,
+    updateUser
 }

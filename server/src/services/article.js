@@ -12,6 +12,27 @@ async function getArticlebyID(articleId) {
     return article;
 }
 
+async function getArticleByTopic(topic) {
+    let articles = await Article.find({topics:[topic]})
+    
+    return articles;
+}
+
+async function getPopularArticles() {
+    let articles = await getArticles();
+
+    //Sort them by most likes
+     
+    return articles;
+}
+
+async function getSavedArticles(userId) {
+    let articles = await getArticles();
+    //Find articles if the user had liked them 
+
+    return articles;
+}
+
 async function create(articleInfo) {
     let created = Date.now(); 
     articleInfo.created = created;
@@ -38,5 +59,8 @@ module.exports = {
     update,
     deleteArticle,
     getArticlebyID,
-    getArticles
+    getArticles,
+    getArticleByTopic,
+    getPopularArticles,
+    getSavedArticles
 }

@@ -13,7 +13,7 @@ async function start() {
     app.use(router);
     
     app.listen(3000, () => {
-        console.log("started");
+        console.log("Started on port 3000");
     })
 }
 

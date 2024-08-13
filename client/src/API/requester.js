@@ -1,14 +1,22 @@
-async function get(url){
-    let request = await fetch(url);
+async function get(url,token){
+    let requestInfo = {
+        method:"get",
+        headers: token ? {"Auth-Token":token} : {},
+        body:undefined
+    }
+    
+    let request = await fetch(url,requestInfo);
     let data = await request.json();
     
     return data;
 }
 
-async function post(url,body){
+async function post(url,body,token){
+    let tokenHeader = token ? {"Auth-Token":token} : {};
+
     let requestInfo = {
         method:"post",
-        headers:{"Content-Type":"application/json"},
+        headers:{"Content-Type":"application/json",...tokenHeader},
         body:JSON.stringify(body)
     }
 
@@ -18,10 +26,12 @@ async function post(url,body){
     return data;
 } 
 
-async function put(url,body){
+async function put(url,body,token){
+    let tokenHeader = token ? {"Auth-Token":token} : {};
+
     let requestInfo = {
         method:"put",
-        headers:{"Content-Type":"application/json"},
+        headers:{"Content-Type":"application/json",...tokenHeader},
         body:JSON.stringify(body)
     }
 
@@ -31,10 +41,12 @@ async function put(url,body){
     return data;
 } 
 
-async function del(url){
+async function del(url,token){
+    let tokenHeader = token ? {"Auth-Token":token} : {};
+
     let requestInfo = {
         method:"delete",
-        headers:{}
+        headers:{...tokenHeader}
     }
 
     let request = await fetch(url,requestInfo);

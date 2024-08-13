@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
 import Home from "./components/Home/Home";
 import Navigation from "./components/Navigations/Navigation";
@@ -10,31 +11,63 @@ import ArticleDetails from "./components/Articles/ArticleDetails";
 import NotFound from "./components/NotFound/NotFound";
 import UpdateArticle from "./components/Articles/UpdateArticle";
 import CreateArticle from "./components/Articles/CreateArticle";
+import { AuthContext } from "./contexts/AuthContext";
+import UserProfile from "./components/Profile/Profile";
 
 function App() {
+    let [authData, setAuthData] = useState({});
+
+    function changeAuthData(data) {
+        if(!data.user){
+            setAuthData({});
+            return;
+        }        
+        
+        
+        let newData = {
+            email: data.user.email,
+            avatar: data.user.avatar,
+            token: data["Auth-Token"]
+        }
+
+        setAuthData(newData);
+    }
+
+    let contextData = {
+        email: authData.email,
+        token: authData.token,
+        avatar: authData.avatar,
+        isLogged: !!authData.email,
+        changeAuthData
+    }
+
     return (
-        <div className="flex">
-            <Navigation />
+        <AuthContext.Provider value={contextData}>
+            <div className="flex">
+                <Navigation />
 
-            <div className="flex-grow p-4">
-                <Routes>
-                    <Route path="/" element={<Home show="all" />} />
-                    <Route path="/popular" element={<Home show="popular" />} />
-                    <Route path="/liked" element={<Home show="liked" />} />
-                    <Route path="/topics/:topic" element={<Topic />} />
-                    <Route path="/policy" element={<Policy />} />
+                <div className="flex-grow p-4">
+                    <Routes>
+                        <Route path="/" element={<Home show="all" />} />
+                        <Route path="/popular" element={<Home show="popular" />} />
+                        <Route path="/saved" element={<Home show="saved" />} />
+                        <Route path="/topics/:topic" element={<Topic />} />
+                        <Route path="/policy" element={<Policy />} />
 
-                    <Route path="/login" element={<Login />} />
-                    <Route path="register" element={<Register />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="register" element={<Register />} />
 
-                    <Route path="/articles/details/:articleId" element={<ArticleDetails />} />
-                    <Route path="/articles/create" element={<CreateArticle />} />
-                    <Route path="/articles/edit/:articleId" element={<UpdateArticle />} />
+                        <Route path="/articles/details/:articleId" element={<ArticleDetails />} />
+                        <Route path="/articles/create" element={<CreateArticle />} />
+                        <Route path="/articles/edit/:articleId" element={<UpdateArticle />} />
 
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
+                        <Route path="/users/me" element={<UserProfile />} />
+
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </div>
             </div>
-        </div>
+        </AuthContext.Provider>
     )
 }
 

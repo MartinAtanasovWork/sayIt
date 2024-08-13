@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import NavUser from "./NavUser";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function Navigation() {
+    let { isLogged } = useContext(AuthContext);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     function toggleSettings() {
@@ -10,14 +12,14 @@ export default function Navigation() {
     }
 
     return (
-        <div className="h-screen w-64 bg-white text-gray-800 flex flex-col border-r border-gray-200">
-            {/* Logo Section */}
+        <div className="h-screen w-64 bg-white text-gray-800 flex flex-col border-r border-gray-200 sticky top-0">
+
             <div className="p-4 flex items-center justify-center">
                 <Link to="/" className="text-xl font-bold text-green-600">sayIt</Link>
             </div>
             <hr className="border-gray-200" />
 
-            {/* Search Bar */}
+
             <div className="p-4">
                 <input
                     type="text"
@@ -26,16 +28,21 @@ export default function Navigation() {
                 />
             </div>
 
-            {/* Navigation Links */}
+
             <nav className="flex flex-grow flex-col p-4 space-y-2">
                 <Link to="/popular" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
                     Popular
                 </Link>
-                <Link to="/liked" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
-                    Liked posts
-                </Link>
+                {isLogged && <>
+                    <Link to="/saved" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
+                        Saved posts
+                    </Link>
+                    <Link to="/articles/create" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
+                        Create
+                    </Link>
+                </>}
 
-                {/* Settings */}
+
                 <div className="relative">
                     <button
                         onClick={toggleSettings}
@@ -66,7 +73,7 @@ export default function Navigation() {
                                 Technology
                             </Link>
                             <Link to="/topics/movies-and-shows" className="block hover:bg-green-100 hover:text-green-600 p-2 rounded">
-                                Movies and  Shows
+                                Movies and Shows
                             </Link>
                             <Link to="/topics/celebrities" className="block hover:bg-green-100 hover:text-green-600 p-2 rounded">
                                 Celebrities
@@ -74,16 +81,17 @@ export default function Navigation() {
                         </div>
                     )}
                 </div>
-               
-                {/* Policy */}
+
+
                 <Link to="/policy" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
                     Policy
                 </Link>
             </nav>
 
-            {/* User */}
-            <NavUser />   
-                     
+
+            <NavUser />
         </div>
+
+
     );
 }

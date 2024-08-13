@@ -30,39 +30,41 @@
 -[] comments - later
 -[X] authentication
 
-## Functionalities 
--[] basic
--[] categories
--[] popular
--[] liked
+## Functionalities with articles 
+-[X] basic
+-[X] categories
+-[] popular - later after saves
+-[] save - later after likes and authentication
+
+## Contexts
+-[X] Auth
+-[X] Change Request to add token if exists    
 
 ## hooks
--[] useForm
--[] useArticles
+-[X] useForm
+-[X] useArticles
 -[] useComment - later
 -[] useCreateArtilce - later
--[] useAuthentication
--[] useValidation
+-[] useUpdateArticle - later
+-[] useDeleteArticle - later
+-[X] useAuthentication
+-[] useValidation - later
 
 ## Articles
 -[] Create
 -[] Update
 -[] Delete
 
-## Contexts
--[] Auth
--[] Change Request to add token if exists 
-
 ## Authentication
--[] login
--[] register
--[] logout   
+-[X] login
+-[X] register
+-[X] logout   
 
 ## Userbased functionality
--[] Dynamic navigation
--[] Create article
+-[X] Dynamic navigation
+-[X] Create article
 -[] Edit and Delete article
--[] Like article
+-[] Save article
 
 ## Error and validation
 -[] login
