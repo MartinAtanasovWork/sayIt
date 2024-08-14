@@ -21,6 +21,10 @@ const schema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         required: true
     },
+    comments:[{
+        type:mongoose.Types.ObjectId,
+        ref: "Comments"        
+    }],
     created:{
         type:String,
         required:true

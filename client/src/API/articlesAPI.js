@@ -20,17 +20,11 @@ async function getByTopic(topic,token) {
     return articles;
 }
 
-async function getPopular(token) {
-    let articles = await requesterAPI.get(DEFAULT_PATH + "/popular",token);
+async function getLatest(token) {
+    let articles = await requesterAPI.get(DEFAULT_PATH + "/latest",token);
 
     return articles;
 }   
-
-async function getSaved(token) {  
-    let articles = await requesterAPI.get(DEFAULT_PATH + "/saved",token);
-
-    return articles;
-}
 
 async function create(articleInfo,token) { 
     let article = await requesterAPI.post(DEFAULT_PATH + "/create", articleInfo,token);
@@ -45,18 +39,36 @@ async function update(articleId, articleInfo,token) {
 }
 
 async function del(articleId,token) {
-   requesterAPI.del(DEFAULT_PATH + "/delete/" + articleId,token);
+  await requesterAPI.del(DEFAULT_PATH + "/delete/" + articleId,token);
 }  
+
+async function getComments(articleId) {
+    let comments = await requesterAPI.get(DEFAULT_PATH + "/comments/" + articleId);
+    
+    return comments;
+}
+
+async function createComment(body,token) {
+    let comment = await requesterAPI.post(DEFAULT_PATH + "/comments/create",body,token);
+
+    return comment;
+}
+
+async function deleteComment(commentId,articleId) {
+    await requesterAPI.post(DEFAULT_PATH + "/comments/delete",{commentId,articleId});     
+}
 
 let articlesAPI = {
     getAll,
     getOne,
     getByTopic,
-    getPopular,
-    getSaved,
+    getLatest, 
     create,
     update,
-    del    
+    del,
+    getComments,
+    createComment,
+    deleteComment    
 }
 
 export default articlesAPI;

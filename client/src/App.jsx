@@ -51,8 +51,7 @@ function App() {
                 <div className="flex-grow p-4">
                     <Routes>
                         <Route path="/" element={<Home show="all" />} />
-                        <Route path="/popular" element={<Home show="popular" />} />
-                        <Route path="/saved" element={<Home show="saved" />} />
+                        <Route path="/latest" element={<Home show="latest" />} />                     
                         <Route path="/topics/:topic" element={<Topic />} />
                         <Route path="/policy" element={<Policy />} />
 

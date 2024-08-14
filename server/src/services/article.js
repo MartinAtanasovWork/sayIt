@@ -1,4 +1,5 @@
 const { Article } = require("../model/Article");
+const { Comments } = require("../model/Comments");
 
 async function getArticles() {
     let articles = await Article.find({});
@@ -13,31 +14,26 @@ async function getArticlebyID(articleId) {
 }
 
 async function getArticleByTopic(topic) {
-    let articles = await Article.find({topics:[topic]})
+    let articles = await Article.find({ topics: [topic] })
     
     return articles;
 }
 
-async function getPopularArticles() {
+async function getLatestArticles() {
     let articles = await getArticles();
 
-    //Sort them by most likes
-     
+    articles.reverse();
+    
     return articles;
 }
 
-async function getSavedArticles(userId) {
-    let articles = await getArticles();
-    //Find articles if the user had liked them 
 
-    return articles;
-}
-
-async function create(articleInfo,userId) {
+async function create(articleInfo, userId) {
     let author = userId;
-    let created = Date.now(); 
-    
-    let newArticle = new Article({...articleInfo,author,created});
+    let created = Date.now();
+    let comments = [];
+
+    let newArticle = new Article({ ...articleInfo, author, created, comments });
 
     let createdArticle = await newArticle.save();
 
@@ -45,13 +41,46 @@ async function create(articleInfo,userId) {
 }
 
 async function update(updatedInfo, articleId) {
-   let updatedArticle = await Article.findOneAndUpdate({ _id: articleId }, updatedInfo);
+    let updatedArticle = await Article.findOneAndUpdate({ _id: articleId }, updatedInfo);
 
-   return updatedArticle;
+    return updatedArticle;
 }
 
 async function deleteArticle(articleId) {
     await Article.findOneAndDelete({ _id: articleId });
+}
+
+async function getArticleComments(articleId) {
+    let article = await Article.findOne({ _id: articleId }).populate("comments").exec();
+
+    return article.comments;
+}
+
+async function createComment(content, author, articleId) {
+    let comment = new Comments({ content, author });
+
+    let newComment = await comment.save();
+
+    let article = await Article.findOne({ _id: articleId });
+
+    article.comments.push(newComment._id.toString());
+
+    await update(article, articleId);
+
+    return newComment;
+}
+
+async function deleteComment(commentId, articleId) {
+    await Comments.findOneAndDelete({ _id: commentId });
+
+    let article = await Article.findOne({ _id: articleId });
+
+    let index = article.comments.indexOf(commentId);
+
+    article.comments.splice(index, 1);
+    article.comments.map(comment => comment.toString());
+
+    await update({ comments: article.comments.map(a => a.toString()) }, articleId)
 }
 
 module.exports = {
@@ -61,6 +90,8 @@ module.exports = {
     getArticlebyID,
     getArticles,
     getArticleByTopic,
-    getPopularArticles,
-    getSavedArticles
+    getLatestArticles, 
+    getArticleComments,
+    createComment,
+    deleteComment
 }

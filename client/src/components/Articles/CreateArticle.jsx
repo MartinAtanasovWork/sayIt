@@ -7,9 +7,7 @@ export default function CreateArticle() {
     let { createArticle } = useArticle();
     let navigate = useNavigate();
 
-    async function submitCallback(values) {
-        // validate fileds and image
-
+    async function submitCallback(values) {   
         let result = await createArticle(values, image);
 
         navigate("/articles/details/" + result._id);
@@ -40,7 +38,6 @@ export default function CreateArticle() {
             <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
                 <h1 className="text-3xl font-bold text-green-600 mb-6">Create New Article</h1>
                 <form onSubmit={submitHandler}>
-                    {/* Title */}
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
                             Title
@@ -51,12 +48,12 @@ export default function CreateArticle() {
                             name="title"
                             value={values.title}
                             onChange={changeHandler}
+                            required
                             className="w-full p-2 border border-green-600 rounded-lg focus:outline-none focus:border-green-800"
                             placeholder="Enter article title"
                         />
                     </div>
 
-                    {/* Image Upload */}
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="image">
                             Image
@@ -66,13 +63,13 @@ export default function CreateArticle() {
                             type="file"
                             name="image"
                             accept="image/*"
+                            required
                             onChange={changeImage}
                             className="w-full p-2 border border-green-600 rounded-lg focus:outline-none focus:border-green-800"
                         />
                         <img src={preview} />
                     </div>
 
-                    {/* Content */}
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="content">
                             Content
@@ -82,13 +79,13 @@ export default function CreateArticle() {
                             name="content"
                             value={values.content}
                             onChange={changeHandler}
+                            required
                             className="w-full p-2 border border-green-600 rounded-lg focus:outline-none focus:border-green-800"
                             rows="10"
                             placeholder="Enter article content"
                         />
                     </div>
 
-                    {/* Topic Selection */}
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="topic">
                             Topic
@@ -97,6 +94,7 @@ export default function CreateArticle() {
                             id="topic"
                             name="topic"
                             value={values.topic}
+                            required
                             onChange={changeHandler}
                             className="w-full p-2 border border-green-600 rounded-lg focus:outline-none focus:border-green-800"
                         >
@@ -109,7 +107,6 @@ export default function CreateArticle() {
                         </select>
                     </div>
 
-                    {/* Submit Button */}
                     <div className="mt-6">
                         <button
                             type="submit"

@@ -30,13 +30,10 @@ export default function Navigation() {
 
 
             <nav className="flex flex-grow flex-col p-4 space-y-2">
-                <Link to="/popular" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
-                    Popular
+                <Link to="/latest" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
+                    Latest
                 </Link>
-                {isLogged && <>
-                    <Link to="/saved" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
-                        Saved posts
-                    </Link>
+                {isLogged && <>                    
                     <Link to="/articles/create" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
                         Create
                     </Link>

@@ -18,12 +18,9 @@ export function useArticle() {
                     case "all":
                         data = await articlesAPI.getAll();
                         break;
-                    case "popular":
-                        data = await articlesAPI.getPopular();
-                        break;
-                    case "saved":
-                        data = await articlesAPI.getSaved();
-                        break;
+                    case "latest":
+                        data = await articlesAPI.getLatest();
+                        break;                  
                 }
 
                 setArticles(data);
@@ -46,7 +43,6 @@ export function useArticle() {
     }
 
     function articleById(id) {
-
         Effect(() => {
             (async () => {
                 let data = await articlesAPI.getOne(id);
@@ -73,17 +69,17 @@ export function useArticle() {
         return result;
     }
 
-    async function updateArticle(articleId, articleInfo,image) {
+    async function updateArticle(articleId, articleInfo, image) {
         let reqBody = {
             ...articleInfo
-        }        
+        }
         let url = await uploadImageAndGetUrl(image);
-              
-        reqBody.img = url;     
-                
-        let result = await articlesAPI.update(articleId,reqBody,token);
-        
-                
+
+        reqBody.img = url;
+
+        let result = await articlesAPI.update(articleId, reqBody, token);
+
+
         return result;
     }
 
@@ -108,12 +104,31 @@ export function useArticle() {
         return result.secure_url;
     }
 
+    async function getComments(articleId) {
+        let data = await articlesAPI.getComments(articleId);
+                   
+        return data;
+    }
+
+    async function createComment(body){
+        let comment = await articlesAPI.createComment(body,token);
+
+        return comment;
+    }
+
+    async function deleteComment(commentId,articleId) {
+        await articlesAPI.deleteComment(commentId,articleId);  
+    }
+
     return {
         homeArticles,
         topicArticles,
         articleById,
         createArticle,
         updateArticle,
-        deleteArticle
+        deleteArticle,
+        getComments,
+        createComment,
+        deleteComment
     }
 }

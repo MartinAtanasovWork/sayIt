@@ -1,4 +1,4 @@
-const { create, update, deleteArticle, getArticlebyID, getArticles, getArticleByTopic, getPopularArticles, getSavedArticles} = require("../services/article");
+const { create, update, deleteArticle, getArticlebyID, getArticles, getArticleByTopic, getLatestArticles} = require("../services/article");
 
 async function getArticlesController(req,res) {
     let articles = await getArticles();   
@@ -25,18 +25,9 @@ async function getArticleByTopicController(req,res) {
     res.end();    
 }
 
-async function getPopularArticlesController(req,res) {    
-    let articles = await getPopularArticles();
+async function getLatestArticlesController(req,res) {    
+    let articles = await getLatestArticles();
                 
-    res.json(articles);
-    res.end();
-}
-
-async function getSavedArticlesContoller(req,res) {
-    //let userId = req.user._id;
-
-    let articles = await getSavedArticles();
-     
     res.json(articles);
     res.end();
 }
@@ -91,8 +82,7 @@ async function deleteController(req, res) {
 module.exports = {
     getArticlesController,
     getArticlebyIDContoller,
-    getPopularArticlesController,
-    getSavedArticlesContoller,
+    getLatestArticlesController,  
     createController,
     updateController,
     deleteController,

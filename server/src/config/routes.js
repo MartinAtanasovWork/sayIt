@@ -1,4 +1,5 @@
-const { createController, updateController, deleteController, getArticlesController, getArticlebyIDContoller, getArticleByTopicController, getPopularArticlesController, getSavedArticlesContoller } = require("../controllers/article");
+const { createController, updateController, deleteController, getArticlesController, getArticlebyIDContoller, getArticleByTopicController, getLatestArticlesController } = require("../controllers/article");
+const { getArticleCommentsController, createCommentController, deleteCommentController } = require("../controllers/comments");
 const { loginController, registerController, logoutController, getCurrentUserContoller, changeCurrentUserController } = require("../controllers/user");
 const { isUser } = require("../middlewares/guards");
 
@@ -13,12 +14,15 @@ router.put("/user/me/update",isUser,changeCurrentUserController)
 router.get("/articles",getArticlesController);
 router.get("/articles/details/:articleId",getArticlebyIDContoller);
 router.get("/articles/topics/:topic",getArticleByTopicController)
-router.get("/articles/popular",getPopularArticlesController);
-router.get("/articles/saved",getSavedArticlesContoller);
+router.get("/articles/latest",getLatestArticlesController);
 
 router.post("/articles/create",isUser,createController);
 router.put("/articles/update/:articleId",isUser,updateController);
 router.delete("/articles/delete/:articleId",isUser,deleteController);
+
+router.get("/articles/comments/:articleId",getArticleCommentsController);
+router.post("/articles/comments/create",isUser,createCommentController);
+router.post("/articles/comments/delete",deleteCommentController);
 
 module.exports = {
     router

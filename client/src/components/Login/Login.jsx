@@ -1,30 +1,46 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import useAuthentication from "../../hooks/useAuthentication";
+import { useState } from "react";
+import "./validation.css";
 
 // eslint-disable-next-line react/prop-types
 export default function Login({ isVisible, closeFunc }) {
-    let {login} = useAuthentication();
+    let { login } = useAuthentication();
     let navigate = useNavigate();
-    
-    async function submitCallback(values) {
-        // validate vlaues
+    const [errors, setErrors] = useState({ email: '', password: '', form: '' });
 
-        let data = await login(values.email, values.password);  
-                  
-        if(!data.error){     
+    async function submitCallback(values) {
+        setErrors({ email: '', password: '', form: '' });
+
+        if (!values.email) {
+            setErrors(prevErrors => ({ ...prevErrors, email: 'Email is required' }));
+            return;
+        }
+        if (!values.password) {
+            setErrors(prevErrors => ({ ...prevErrors, password: 'Password is required' }));
+            return;
+        }
+        if (values.password.length < 8) {
+            setErrors(prevErrors => ({ ...prevErrors, password: 'Password must be at least 8 characters long' }));
+            return;
+        }
+
+        let data = await login(values.email, values.password);
+
+        if (!data.error) {
             nullateProperties();
             closeFunc();
             navigate("/");
+        } else {
+            setErrors(prevErrors => ({ ...prevErrors, form: 'Invalid email or password' }));
         }
-        
-        //hnadle if register returns error in data
     }
 
-    let {values,changeHandler,submitHandler,nullateProperties} = useForm({email:"",password:""},submitCallback);  
-        
-    if (!isVisible) return null   
-    
+    let { values, changeHandler, submitHandler, nullateProperties } = useForm({ email: "", password: "" }, submitCallback);
+
+    if (!isVisible) return null;
+
     return (
         <>
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -39,37 +55,24 @@ export default function Login({ isVisible, closeFunc }) {
                             </button>
                         </div>
                         <p className="mx-auto mt-4 max-w-md text-center text-gray-500">
-                            By continuing, you agree to our User Policy and acknowledge that you understand the Privacy Policy.You can see our policies <Link to="/policy" onClick={closeFunc} className="underline text-blue-900">here</Link>.
+                            By continuing, you agree to our User Policy and acknowledge that you understand the Privacy Policy. You can see our policies <Link to="/policy" onClick={closeFunc} className="underline text-blue-900">here</Link>.
                         </p>
                         <form onSubmit={submitHandler} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
                             <p className="text-center text-lg font-medium">Sign in to your account</p>
+                            {errors.form && <p className="text-center text-red-500">{errors.form}</p>}
                             <div>
                                 <label htmlFor="email" className="sr-only">Email</label>
                                 <div className="relative">
                                     <input
                                         type="email"
-                                        className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                        id="email"
                                         name="email"
-                                        placeholder="Enter email"
                                         value={values.email}
-                                        onChange={changeHandler}
+                                        onChange={changeHandler}                              
+                                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-green-600 ${errors.email ? 'error' : 'border-gray-300'}`}
+                                        placeholder="Enter email"
                                     />
-                                    <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="size-4 text-gray-400"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                                            />
-                                        </svg>
-                                    </span>
+                                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                                 </div>
                             </div>
                             <div>
@@ -77,39 +80,19 @@ export default function Login({ isVisible, closeFunc }) {
                                 <div className="relative">
                                     <input
                                         type="password"
-                                        className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                        id="password"
                                         name="password"
-                                        placeholder="Enter password"
                                         value={values.password}
-                                        onChange={changeHandler}
+                                        onChange={changeHandler}                                
+                                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-green-600 ${errors.password ? 'error' : 'border-gray-300'}`}
+                                        placeholder="Enter password"
                                     />
-                                    <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="size-4 text-gray-400"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                            />
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                                            />
-                                        </svg>
-                                    </span>
+                                    {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
                                 </div>
                             </div>
                             <button
                                 type="submit"
-                                className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+                                className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-500 transition-colors duration-300"
                             >
                                 Sign in
                             </button>
@@ -121,5 +104,5 @@ export default function Login({ isVisible, closeFunc }) {
                 </div>
             </div>
         </>
-    )
+    );
 }

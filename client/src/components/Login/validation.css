@@ -1,0 +1,11 @@
+input.error,
+textarea.error {
+    border-color: #f87171; 
+    background-color: #fee2e2; 
+}
+
+.error-message {
+    color: #f87171; 
+    font-size: 0.875rem; 
+    margin-top: 0.25rem; 
+}
