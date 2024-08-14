@@ -4,7 +4,7 @@ Hello, form the sayIt team.
 This is our simple blog application. 
 
 ---
-###How to run the application    
+### How to run the application    
 
 1.Cloning the repo to your computer! 
 2. Install Dependancies 
