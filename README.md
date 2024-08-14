@@ -6,7 +6,8 @@ This is our simple blog application.
 ---
 ### How to run the application    
 
-1.Cloning the repo to your computer! 
+1.Clone the repo to your computer!
+
 2. Install Dependancies 
    *  **Client**   
    ```bash 
@@ -15,7 +16,7 @@ This is our simple blog application.
    ```      
    * **Server**
    ```bash
-   cd Server
+   cd server
    npm install
    ```
 3. Startin the application locally
@@ -29,3 +30,10 @@ This is our simple blog application.
    cd client
    npm run client
    ```
+   
+---
+### Reuirements
+
+#### 1. Node.js
+
+#### 2.MongoDB
