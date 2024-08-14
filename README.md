@@ -35,6 +35,8 @@ Then you start the **Client**
 cd client
 npm run client
 ```
+
+#### The application is running on `http://localhost:5173`
    
 ---
 ### Reuirements
