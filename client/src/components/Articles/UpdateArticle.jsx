@@ -1,9 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom"
 
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useArticle } from "../../hooks/useArticle";
+import { AuthContext } from "../../contexts/AuthContext";
+import NotFound from "../NotFound/NotFound";
 
 export default function EditArticle() {
+    let { isLogged} = useContext(AuthContext);
     let { articleId } = useParams();
     let { articleById, updateArticle } = useArticle();
     let article = articleById(articleId);
@@ -55,6 +58,8 @@ export default function EditArticle() {
 
 
     return (
+        <>
+        {!isLogged ? <NotFound /> :
         <div className="bg-white text-gray-900 min-h-screen py-10 px-4">
             <div className="max-w-4xl mx-auto">
                 <form onSubmit={submitHandler}>
@@ -105,5 +110,7 @@ export default function EditArticle() {
                 <p>© 2024 sayIt. All rights reserved.</p>
             </footer>
         </div>
+}
+        </>
     );
 }

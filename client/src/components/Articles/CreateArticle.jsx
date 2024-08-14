@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { useArticle } from '../../hooks/useArticle';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
+import NotFound from '../NotFound/NotFound';
 
 export default function CreateArticle() {
+    let { isLogged} = useContext(AuthContext);
     let { createArticle } = useArticle();
     let navigate = useNavigate();
 
@@ -33,7 +36,8 @@ export default function CreateArticle() {
         file.readAsDataURL(e.target.files[0])
     }
 
-    return (
+    return (<>
+        {!isLogged ? <NotFound /> : 
         <div className="bg-white text-gray-900 min-h-screen py-10 px-4">
             <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
                 <h1 className="text-3xl font-bold text-green-600 mb-6">Create New Article</h1>
@@ -118,5 +122,6 @@ export default function CreateArticle() {
                 </form>
             </div>
         </div>
-    );
+        }
+    </>);
 }
