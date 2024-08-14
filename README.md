@@ -1,37 +1,31 @@
 # sayIt
 ---
-Hello, form the **sayIt** team.
+Hello, form the ##sayIt## team.
 This is our simple blog application. 
 
 ---
+###How to run the application    
 
-Installation   
-To successfully run the project, complete the steps below.
-1.  **Clone the repository**
-```bash
-git clone https://github.com/Water-Shadow23/Momentia.git
-```
-2. **Install Dependancies**
- 
-   *  **Backend**   
+1.Cloning the repo to your computer! 
+2. Install Dependancies 
+   *  **Client**   
    ```bash 
-   cd Server
-   npm i
+   cd client
+   npm install
    ```      
-   * **Frontend**
+   * **Server**
    ```bash
-   cd Client
-   npm i
-   ```
-3. **Run locally**
-
-   * **Server**   
-   ```bash 
    cd Server
-   npm start
+   npm install
+   ```
+3. Startin the application locally
+   * First you start the **Server**   
+   ```bash 
+   cd server
+   npm run server
    ```  
-   * **Client**
+   * Then you start the **Client**
    ```bash
-   cd Client
-   npm run dev
+   cd client
+   npm run client
    ```
