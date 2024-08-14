@@ -8,7 +8,8 @@ This is our simple blog application.
 
 1.Clone the repo to your computer!
 
-2. Install Dependancies 
+2. Install Dependancies
+ 
    **Client**   
    ```bash 
    cd client
