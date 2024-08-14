@@ -6,9 +6,9 @@ This is our simple blog application.
 ---
 ### How to run the application    
 
-1.Clone the repo to your computer!
+##### 1.Clone the repo to your computer!
 
-2. Install Dependancies
+##### 2.Install Dependancies
  
  **Client**   
  ```bash 
@@ -22,19 +22,19 @@ This is our simple blog application.
  npm install
  ```
 
-3. Startin the application locally
+###### 3. Startin the application locally
  
- First you start the **Server**   
- ```bash 
- cd server
- npm run server
- ```
+First you start the **Server**   
+```bash 
+cd server
+npm run server
+```
 
- Then you start the **Client**
- ```bash
- cd client
- npm run client
- ```
+Then you start the **Client**
+```bash
+cd client
+npm run client
+```
    
 ---
 ### Reuirements
