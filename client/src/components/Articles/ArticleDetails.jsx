@@ -6,7 +6,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 export default function ArticleDetails() {
     let { id: loggedInUserId, isLogged } = useContext(AuthContext);
     let { articleId } = useParams();
-    let { articleById, deleteArticle, getComments, createComment,deleteComment } = useArticle();
+    let { articleById, deleteArticle, getComments, createComment, deleteComment } = useArticle();
     let article = articleById(articleId)
     let [comments, setComments] = useState([]);
     let [isOwner, setIsOwner] = useState(false);
@@ -54,21 +54,22 @@ export default function ArticleDetails() {
     }
 
     async function deleteCommnentHandler(id) {
-        await deleteComment(id,articleId);      
+        await deleteComment(id, articleId);
         setLoadComments(oldValue => !oldValue);
     }
 
     return (
         <div className="bg-white text-gray-900 min-h-screen py-10 px-4 flex-grow">
             <div className="max-w-4xl mx-auto">
-                <div className="mb-8">
-                    <img
-                        src={article.img}
-                        alt={article.title}
-                        className="w-full h-64 object-cover rounded-lg shadow-lg"
-                    />
-                </div>
-
+                {article.img &&
+                    <div className="mb-8">
+                        <img
+                            src={article.img}
+                            alt={article.title}
+                            className="w-full h-64 object-cover rounded-lg shadow-lg"
+                        />
+                    </div>
+                }
                 <div className="flex items-center justify-between mb-4">
                     <h1 className="text-4xl font-bold text-green-600">
                         {article.title}
@@ -91,11 +92,10 @@ export default function ArticleDetails() {
                     )}
                 </div>
 
-                <div className="prose prose-lg whitespace-pre-line">
+                <div className="max-width-sm whitespace-pre-line break-words">
                     {article.content}
                 </div>
 
-                {/* Comments Section */}
                 <div className="mt-10 flex-grow">
                     <h2 className="text-2xl font-semibold mb-4">Comments</h2>
 
@@ -103,18 +103,17 @@ export default function ArticleDetails() {
                         {comments.map((comment, index) => (
                             <div
                                 key={index}
-                                className="bg-gray-100 p-4 rounded-lg shadow"
+                                className="bg-gray-100 p-4 rounded-lg shadow break-words whitespace-pre-line"
                             >
-                                <div className="flex justify-between items-start">
-                                    <p className="flex-grow">{comment.content}</p>
-                                    {loggedInUserId == comment.author && 
+                                <p className="mb-2 break-words">{comment.content}</p>
+                                {loggedInUserId == comment.author && (
                                     <button
                                         onClick={() => deleteCommnentHandler(comment._id)}
-                                        className="bg-red-600 text-white py-1 px-3 rounded-lg hover:bg-red-500 transition-colors duration-200 ml-4"
+                                        className="bg-red-600 text-white py-1 px-3 rounded-lg hover:bg-red-500 transition-colors duration-200"
                                     >
                                         Delete
-                                    </button>}
-                                </div>
+                                    </button>
+                                )}
                             </div>
                         ))}
                     </div>

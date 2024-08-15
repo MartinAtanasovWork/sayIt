@@ -11,6 +11,11 @@ export default function CreateArticle() {
     let navigate = useNavigate();
 
     async function submitCallback(values) {   
+
+        if(!image){
+            setImage("");
+        }
+
         let result = await createArticle(values, image);
 
         navigate("/articles/details/" + result._id);
@@ -21,7 +26,7 @@ export default function CreateArticle() {
         topic: "",
     }, submitCallback);
 
-    let [image, setImage] = useState(null);
+    let [image, setImage] = useState(undefined);
     let [preview, setPreview] = useState("");
 
     function changeImage(e) {

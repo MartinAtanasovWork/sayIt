@@ -20,7 +20,7 @@ export function useArticle() {
                         break;
                     case "latest":
                         data = await articlesAPI.getLatest();
-                        break;                  
+                        break;
                 }
 
                 setArticles(data);
@@ -60,9 +60,15 @@ export function useArticle() {
             topics: [articleInfo.topic]
         }
 
-        let url = await uploadImageAndGetUrl(image);
+        let img;
 
-        reqBody.img = url;
+        if (image) {
+            img = await uploadImageAndGetUrl(image);
+        }else{
+            img = "";
+        }
+
+        reqBody.img = img;
 
         let result = await articlesAPI.create(reqBody, token);
 
@@ -106,18 +112,18 @@ export function useArticle() {
 
     async function getComments(articleId) {
         let data = await articlesAPI.getComments(articleId);
-                   
+
         return data;
     }
 
-    async function createComment(body){
-        let comment = await articlesAPI.createComment(body,token);
+    async function createComment(body) {
+        let comment = await articlesAPI.createComment(body, token);
 
         return comment;
     }
 
-    async function deleteComment(commentId,articleId) {
-        await articlesAPI.deleteComment(commentId,articleId);  
+    async function deleteComment(commentId, articleId) {
+        await articlesAPI.deleteComment(commentId, articleId);
     }
 
     return {
