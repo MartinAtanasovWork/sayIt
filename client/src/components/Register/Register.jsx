@@ -1,12 +1,20 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import useAuthentication from '../../hooks/useAuthentication';
 import { useForm } from '../../hooks/useForm';
+
 import './validation.css'; 
-import { useState } from 'react';
 
 export default function Register() {
     let { register } = useAuthentication();
     let navigate = useNavigate();
+
+    let { values, changeHandler, submitHandler } = useForm({
+        email: "",
+        password: "",
+        confirmPassword: ""
+    }, submitCallback);
 
     const [errors, setErrors] = useState({
         email: '',
@@ -14,7 +22,7 @@ export default function Register() {
         confirmPassword: '',
         form: ''
     });
-
+  
     async function submitCallback(values) {
         setErrors({ email: '', password: '', confirmPassword: '', form: '' }); 
 
@@ -35,20 +43,14 @@ export default function Register() {
             return;
         }
 
-        let data = await register(values.email, values.password);
+        let userData = await register(values.email, values.password);
 
-        if (!data.error) {
+        if (!userData.error) {
             navigate("/");
         } else {
-            setErrors(prev => ({ ...prev, form: data.error }));
+            setErrors(prev => ({ ...prev, form: userData.error }));
         }
     }
-
-    let { values, changeHandler, submitHandler } = useForm({
-        email: "",
-        password: "",
-        confirmPassword: ""
-    }, submitCallback);
 
     return (
         <div className="flex justify-center items-center min-h-screen">
@@ -68,6 +70,7 @@ export default function Register() {
                         />
                         {errors.email && <p className="error-message">{errors.email}</p>}
                     </div>
+
                     <div className="mb-4">
                         <label htmlFor="password" className="block text-green-600 mb-2">Password</label>
                         <input
@@ -80,6 +83,7 @@ export default function Register() {
                         />
                         {errors.password && <p className="error-message">{errors.password}</p>}
                     </div>
+
                     <div className="mb-6">
                         <label htmlFor="confirmPassword" className="block text-green-600 mb-2">Confirm Password</label>
                         <input
@@ -92,12 +96,14 @@ export default function Register() {
                         />
                         {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
                     </div>
+
                     <button
                         type="submit"
                         className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-500 transition-colors duration-300 focus:ring-4 focus:ring-pink-300"
                     >
                         Register
                     </button>
+                    
                 </form>
             </div>
         </div>

@@ -1,7 +1,9 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import NavUser from "./NavUser";
+
 import { AuthContext } from "../../contexts/AuthContext";
+
+import NavUser from "./NavUser";
 
 export default function Navigation() {
     let { isLogged } = useContext(AuthContext);
@@ -13,12 +15,11 @@ export default function Navigation() {
 
     return (
         <div className="h-screen w-64 bg-white text-gray-800 flex flex-col border-r border-gray-200 sticky top-0">
-
             <div className="p-4 flex items-center justify-center">
                 <Link to="/" className="text-xl font-bold text-green-600">sayIt</Link>
             </div>
-            <hr className="border-gray-200" />
 
+            <hr className="border-gray-200" />
 
             <div className="p-4">
                 <input
@@ -28,17 +29,16 @@ export default function Navigation() {
                 />
             </div>
 
-
             <nav className="flex flex-grow flex-col p-4 space-y-2">
                 <Link to="/latest" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
                     Latest
                 </Link>
-                {isLogged && <>                    
+
+                {isLogged && <>
                     <Link to="/articles/create" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
                         Create
                     </Link>
                 </>}
-
 
                 <div className="relative">
                     <button
@@ -79,16 +79,12 @@ export default function Navigation() {
                     )}
                 </div>
 
-
                 <Link to="/policy" className="hover:bg-green-100 hover:text-green-600 p-2 rounded">
                     Policy
                 </Link>
             </nav>
 
-
             <NavUser />
         </div>
-
-
     );
 }

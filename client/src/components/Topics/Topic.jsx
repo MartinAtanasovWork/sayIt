@@ -7,6 +7,7 @@ import { useArticle } from "../../hooks/useArticle";
 export default function Topic() {
     let { topic } = useParams();
     let {topicArticles} = useArticle();
+    
     let articles = topicArticles(topic);
 
     function distributeArticles(article) {

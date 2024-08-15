@@ -1,53 +1,60 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useArticle } from "../../hooks/useArticle";
 import { useContext, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { useArticle } from "../../hooks/useArticle";
 import { AuthContext } from "../../contexts/AuthContext";
 
 export default function ArticleDetails() {
     let { id: loggedInUserId, isLogged } = useContext(AuthContext);
     let { articleId } = useParams();
     let { articleById, deleteArticle, getComments, createComment, deleteComment } = useArticle();
-    let article = articleById(articleId)
-    let [comments, setComments] = useState([]);
-    let [isOwner, setIsOwner] = useState(false);
     let navigate = useNavigate();
+
+    let [isOwner, setIsOwner] = useState(false);
+    let [comments, setComments] = useState([]);
     let [newComment, setNewComment] = useState("");
     let [loadComments, setLoadComments] = useState(true);
+
+    let article = articleById(articleId)
 
     useEffect(() => {
         if (isLogged && article) {
             setIsOwner(loggedInUserId === article.author);
         }
+    }, [isLogged, article, loggedInUserId]);
 
+    useEffect(() => {
         (async () => {
-            let data = await getComments(articleId);
-            setComments(data);
-        })();
-    }, [isLogged, article, loggedInUserId, loadComments]);
+            let comments = await getComments(articleId);
 
-    function handleEdit() {
+            setComments(comments);
+        })();
+    }, [loadComments]);
+
+    function commentChangeHandler(e) {
+        setNewComment(e.target.value);
+    }
+
+    function editHandler() {
         navigate("/articles/edit/" + articleId);
     }
 
-    function handleDelete() {
+    function deleteHandler() {
         if (confirm("Are you sure you want to delete your article?")) {
             deleteArticle(articleId);
             navigate("/");
         }
     }
 
-    function commentChangeHandler(e) {
-        setNewComment(e.target.value);
-    }
-
-    async function addCommentHandler() {
-        if (newComment !== "") {
+    async function createCommentHandler() {
+        if (newComment) {
             let body = {
                 content: newComment,
                 articleId
             }
 
             await createComment(body);
+
             setLoadComments(oldValue => !oldValue);
             setNewComment("");
         }
@@ -70,6 +77,7 @@ export default function ArticleDetails() {
                         />
                     </div>
                 }
+                
                 <div className="flex items-center justify-between mb-4">
                     <h1 className="text-4xl font-bold text-green-600">
                         {article.title}
@@ -77,13 +85,13 @@ export default function ArticleDetails() {
                     {isOwner && (
                         <div className="flex space-x-4">
                             <button
-                                onClick={handleEdit}
+                                onClick={editHandler}
                                 className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500 transition-colors duration-300"
                             >
                                 Edit
                             </button>
                             <button
-                                onClick={handleDelete}
+                                onClick={deleteHandler}
                                 className="bg-pink-600 text-white py-2 px-4 rounded-lg hover:bg-pink-500 transition-colors duration-300"
                             >
                                 Delete
@@ -103,17 +111,17 @@ export default function ArticleDetails() {
                         {comments.map((comment, index) => (
                             <div
                                 key={index}
-                                className="bg-gray-100 p-4 rounded-lg shadow break-words whitespace-pre-line"
+                                className="bg-gray-100 p-4 rounded-lg shadow break-words whitespace-pre-line relative"
                             >
-                                <p className="mb-2 break-words">{comment.content}</p>
                                 {loggedInUserId == comment.author && (
                                     <button
                                         onClick={() => deleteCommnentHandler(comment._id)}
-                                        className="bg-red-600 text-white py-1 px-3 rounded-lg hover:bg-red-500 transition-colors duration-200"
+                                        className="absolute top-2 right-2 bg-red-600 text-white py-1 px-3 rounded-lg hover:bg-red-500 transition-colors duration-200"
                                     >
                                         Delete
                                     </button>
                                 )}
+                                <p className="break-words pr-16">{comment.content}</p>
                             </div>
                         ))}
                     </div>
@@ -128,7 +136,7 @@ export default function ArticleDetails() {
                                 onChange={commentChangeHandler}
                             ></textarea>
                             <button
-                                onClick={addCommentHandler}
+                                onClick={createCommentHandler}
                                 className="mt-2 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500 transition-colors duration-300"
                             >
                                 Add Comment

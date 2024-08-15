@@ -1,14 +1,23 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import { useForm } from "../../hooks/useForm";
 import useAuthentication from "../../hooks/useAuthentication";
-import { useState } from "react";
+
 import "./validation.css";
 
 // eslint-disable-next-line react/prop-types
 export default function Login({ isVisible, closeFunc }) {
     let { login } = useAuthentication();
     let navigate = useNavigate();
-    const [errors, setErrors] = useState({ email: '', password: '', form: '' });
+
+    let { values, changeHandler, submitHandler, nullateProperties } = useForm({ email: "", password: "" }, submitCallback);
+
+    let [errors, setErrors] = useState({
+        email: '',
+        password: '',
+        form: ''
+    });
 
     async function submitCallback(values) {
         setErrors({ email: '', password: '', form: '' });
@@ -26,9 +35,9 @@ export default function Login({ isVisible, closeFunc }) {
             return;
         }
 
-        let data = await login(values.email, values.password);
+        let userData = await login(values.email, values.password);
 
-        if (!data.error) {
+        if (!userData.error) {
             nullateProperties();
             closeFunc();
             navigate("/");
@@ -37,9 +46,7 @@ export default function Login({ isVisible, closeFunc }) {
         }
     }
 
-    let { values, changeHandler, submitHandler, nullateProperties } = useForm({ email: "", password: "" }, submitCallback);
-
-    if (!isVisible) return null;
+    if (!isVisible) return;
 
     return (
         <>
@@ -68,7 +75,7 @@ export default function Login({ isVisible, closeFunc }) {
                                         id="email"
                                         name="email"
                                         value={values.email}
-                                        onChange={changeHandler}                              
+                                        onChange={changeHandler}
                                         className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-green-600 ${errors.email ? 'error' : 'border-gray-300'}`}
                                         placeholder="Enter email"
                                     />
@@ -83,7 +90,7 @@ export default function Login({ isVisible, closeFunc }) {
                                         id="password"
                                         name="password"
                                         value={values.password}
-                                        onChange={changeHandler}                                
+                                        onChange={changeHandler}
                                         className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-green-600 ${errors.password ? 'error' : 'border-gray-300'}`}
                                         placeholder="Enter password"
                                     />

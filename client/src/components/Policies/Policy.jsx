@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import UserPolicy from './UserPolicy';
 import PrivacyPolicy from './PrivacyPolicy';
 
@@ -10,10 +11,12 @@ export default function PolicyPage() {
             return (
                 <UserPolicy />
             );
-        } else if (currentPage === 'privacyPolicy') {
-            return (
-                <PrivacyPolicy />
-            );
+        }
+        else {
+            if (currentPage === 'privacyPolicy')
+                return (
+                    <PrivacyPolicy />
+                );
         }
     };
 

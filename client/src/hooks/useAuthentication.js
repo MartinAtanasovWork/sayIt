@@ -5,7 +5,6 @@ import { AuthContext } from "../contexts/AuthContext";
 export default function useAuthentication() {
     let { token,changeAuthData } = useContext(AuthContext);
 
-
     async function login(email, password) {
         let reqData = await authenticationAPI.login(email, password);
                 

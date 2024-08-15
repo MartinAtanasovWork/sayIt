@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import useUser from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
+
+import useUser from "../../hooks/useUser";
 import { AuthContext } from "../../contexts/AuthContext";
 import useAuthentication from "../../hooks/useAuthentication";
+
 import NotFound from "../NotFound/NotFound";
 
 const avatars = [
@@ -20,26 +22,28 @@ const avatars = [
 export default function UserProfile() {
     let { changeAuthData, isLogged } = useContext(AuthContext);
     let { currentUser, changeCurrentUser } = useUser();
-    let [user, setUser] = useState();
-    let [selectedAvatar, setSelectedAvatar] = useState("");
     let { logout } = useAuthentication();
     let navigate = useNavigate();
+
+    let [user, setUser] = useState();
+    let [selectedAvatar, setSelectedAvatar] = useState("");
 
     useEffect(() => {
         (async () => {
             let userData = await currentUser();
+
             setSelectedAvatar(userData.avatar);
             setUser(userData);
         })()
     }, []);
 
-    function changeAvatar(avatar) {
+    function changeAvatarHandler(avatar) {
         setSelectedAvatar(avatar);
-    }
-    console.log(isLogged);
+    } 
 
     async function onChangeUser() {
         let updatedUser = await changeCurrentUser({ ...user, avatar: selectedAvatar });
+        
         changeAuthData(updatedUser);
         navigate("/");
     }
@@ -81,7 +85,7 @@ export default function UserProfile() {
                                         ? "border-pink-500"
                                         : "border-transparent"
                                         }`}
-                                    onClick={() => changeAvatar(avatar)}
+                                    onClick={() => changeAvatarHandler(avatar)}
                                 >
                                     <img
                                         src={avatar}

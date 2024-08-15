@@ -1,4 +1,5 @@
 import { useContext } from "react";
+
 import { AuthContext } from "../contexts/AuthContext";
 import authenticationAPI from "../API/authenticationAPI";
 
@@ -18,9 +19,9 @@ export default function useUser() {
     }
 
     async function changeCurrentUser(userInfo) {
-        let req = await authenticationAPI.changeCurrentUser(userInfo, token);
+        let changedUser = await authenticationAPI.changeCurrentUser(userInfo, token);
 
-        return req;
+        return changedUser;
     }
 
     return {

@@ -1,6 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
+import { AuthContext } from "./contexts/AuthContext";
+
 import Home from "./components/Home/Home";
 import Navigation from "./components/Navigations/Navigation";
 import Login from "./components/Login/Login";
@@ -11,25 +13,23 @@ import ArticleDetails from "./components/Articles/ArticleDetails";
 import NotFound from "./components/NotFound/NotFound";
 import UpdateArticle from "./components/Articles/UpdateArticle";
 import CreateArticle from "./components/Articles/CreateArticle";
-import { AuthContext } from "./contexts/AuthContext";
 import UserProfile from "./components/Profile/Profile";
 import Persisted from "./components/PersistedComponent/Persisted";
 
 function App() {
     let [authData, setAuthData] = useState({});
 
-    function changeAuthData(data) {
+    function changeAuthData(data, token) {
         if (!data.user) {
             setAuthData({});
             return;
         }
 
-
         let newData = {
             email: data.user.email,
             avatar: data.user.avatar,
             id: data.user._id,
-            token: data["Auth-Token"]
+            token: token  || data["Auth-Token"]
         }
 
         setAuthData(newData);
@@ -54,7 +54,9 @@ function App() {
                         <Route element={<Persisted />}>
                             <Route path="/" element={<Home show="all" />} />
                             <Route path="/latest" element={<Home show="latest" />} />
+
                             <Route path="/topics/:topic" element={<Topic />} />
+                            
                             <Route path="/policy" element={<Policy />} />
 
                             <Route path="/login" element={<Login />} />

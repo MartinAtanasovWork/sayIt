@@ -45,7 +45,7 @@ export function useArticle() {
     function articleById(id) {
         Effect(() => {
             (async () => {
-                let data = await articlesAPI.getOne(id);
+                let data = await articlesAPI.getById(id);
 
                 setArticle(data[0]);
             })()
