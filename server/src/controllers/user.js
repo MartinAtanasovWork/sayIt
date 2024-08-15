@@ -19,7 +19,12 @@ async function registerController(req, res) {
     res.end();
 }
 
-async function getCurrentUserContoller(req, res) {              
+async function getCurrentUserContoller(req, res) {  
+    if(!req.user){
+        res.json({});
+        res.end();
+    }
+    
     let id = req.user._id;
 
     let user = await getUserById(id);
@@ -39,10 +44,6 @@ async function changeCurrentUserController(req, res) {
 }
 
 async function logoutController(req, res) {
-    let token = req.headers["auth-token"];;
-
-    logout(token);
-
     res.status(200);
     res.json({success:"success"});
     res.end();

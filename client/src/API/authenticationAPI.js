@@ -5,17 +5,27 @@ const DEFAULT_URL = "http://localhost:3000/user";
 async function login(email, password) {
     let data = await requesterAPI.post(DEFAULT_URL + "/login", { email, password });
 
+    if(!data.error){      
+        localStorage.setItem("token",data["Auth-Token"]);
+    }
+
     return data;
 }
 
 async function register(email, password) {
     let data = await requesterAPI.post(DEFAULT_URL + "/register", { email, password });
 
+    if(!data.error){
+        localStorage.setItem("token",data["Auth-Token"]);
+    }
+
     return data;
 }
 
 async function logout(token) {
-    await requesterAPI.get(DEFAULT_URL + "/logout", token)
+    await requesterAPI.get(DEFAULT_URL + "/logout", token);
+
+    localStorage.clear();
 }
 
 async function currentUser(token) {

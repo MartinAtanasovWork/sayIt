@@ -1,5 +1,4 @@
 const { verifyToken } = require("../services/token");
-const { invalidateToken } = require("../services/token");
 
 async function isUser(req, res, next) {
     let token = req.headers["auth-token"];
@@ -8,15 +7,16 @@ async function isUser(req, res, next) {
         res.status(401);
         res.json({ error: "Unauthenticated request" });
         res.end();
+        return;
     }
    
     let result = verifyToken(token);
 
-    if (!result) {
-        invalidateToken(token);
+    if (!result) {     
         res.status(403);
         res.json({ error: "Unauthorized request" });
         res.end();
+        return;
     }   
     
     next();

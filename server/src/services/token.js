@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
 const secret = "token secret";
 
-let INVALID_TOKENS = [];
-
 function createToken(user) {
     const payload = {
         _id: user._id,
@@ -16,10 +14,6 @@ function createToken(user) {
 
 function verifyToken(token) {
 
-    if(INVALID_TOKENS.includes(token)){
-        return null;
-    }
-
     try {
         const payload = jwt.verify(token, secret);
         return payload;
@@ -29,10 +23,6 @@ function verifyToken(token) {
 
 }
 
-function invalidateToken(token){
-    INVALID_TOKENS.push(token);
-}
-
 module.exports = {
-    createToken, verifyToken, invalidateToken 
+    createToken, verifyToken  
 }

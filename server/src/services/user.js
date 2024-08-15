@@ -55,7 +55,7 @@ async function getUserById(id) {
 }
 
 async function updateUser(id, userData) {
-    let user = await User.findOneAndUpdate({_id:id},userData);
+    await User.findOneAndUpdate({_id:id},userData);
     let updateUser = await User.findOne({_id:id});
 
     let token = createToken(updateUser);
@@ -68,14 +68,10 @@ async function updateUser(id, userData) {
     return data;
 }
 
-function logout(token) {
-    invalidateToken(token);
-}
 
 module.exports = {
     register,
     login,
-    logout,
     getUserById,
     updateUser
 }

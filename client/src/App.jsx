@@ -13,17 +13,18 @@ import UpdateArticle from "./components/Articles/UpdateArticle";
 import CreateArticle from "./components/Articles/CreateArticle";
 import { AuthContext } from "./contexts/AuthContext";
 import UserProfile from "./components/Profile/Profile";
+import Persisted from "./components/PersistedComponent/Persisted";
 
 function App() {
     let [authData, setAuthData] = useState({});
 
     function changeAuthData(data) {
-        if(!data.user){
+        if (!data.user) {
             setAuthData({});
             return;
-        }        
-        
-        
+        }
+
+
         let newData = {
             email: data.user.email,
             avatar: data.user.avatar,
@@ -50,21 +51,23 @@ function App() {
 
                 <div className="flex-grow p-4">
                     <Routes>
-                        <Route path="/" element={<Home show="all" />} />
-                        <Route path="/latest" element={<Home show="latest" />} />                     
-                        <Route path="/topics/:topic" element={<Topic />} />
-                        <Route path="/policy" element={<Policy />} />
+                        <Route element={<Persisted />}>
+                            <Route path="/" element={<Home show="all" />} />
+                            <Route path="/latest" element={<Home show="latest" />} />
+                            <Route path="/topics/:topic" element={<Topic />} />
+                            <Route path="/policy" element={<Policy />} />
 
-                        <Route path="/login" element={<Login />} />
-                        <Route path="register" element={<Register />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="register" element={<Register />} />
 
-                        <Route path="/articles/details/:articleId" element={<ArticleDetails />} />
-                        <Route path="/articles/create" element={<CreateArticle />} />
-                        <Route path="/articles/edit/:articleId" element={<UpdateArticle />} />
+                            <Route path="/articles/details/:articleId" element={<ArticleDetails />} />
+                            <Route path="/articles/create" element={<CreateArticle />} />
+                            <Route path="/articles/edit/:articleId" element={<UpdateArticle />} />
 
-                        <Route path="/users/me" element={<UserProfile />} />
+                            <Route path="/users/me" element={<UserProfile />} />
 
-                        <Route path="*" element={<NotFound />} />
+                            <Route path="*" element={<NotFound />} />
+                        </Route>
                     </Routes>
                 </div>
             </div>
