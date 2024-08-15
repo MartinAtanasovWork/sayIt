@@ -66,8 +66,7 @@ export default function CreateArticle() {
                             id="image"
                             type="file"
                             name="image"
-                            accept="image/*"
-                            required
+                            accept="image/*"                            
                             onChange={changeImage}
                             className="w-full p-2 border border-green-600 rounded-lg focus:outline-none focus:border-green-800"
                         />
