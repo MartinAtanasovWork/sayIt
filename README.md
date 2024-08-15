@@ -20,7 +20,7 @@
 ## Installation   
 How to install and start the application.
 
-1. **Clone the repository**
+1. **Download the code or clone the repository**
 2. **Install Dependancies**
 
 * ***Server***
