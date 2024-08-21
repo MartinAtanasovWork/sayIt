@@ -1,27 +1,28 @@
 # sayIt 
 
-#### sayIt is a blog application!
+Welcome to **sayIt**, this a simple blog application. You can blog about anything you want(not at the moment though 😂).
+
+We have some cool functionallities so why don't you go check them out.
+We hope you can enjoy our application.  
 
 ---
 
-## Functionallities
+## What can you do ???
 
-+ User
-  - Register 
-  - Login
-  - Logout
-  - Change avatar picture
-+ Articles
-  - Create
-  - Edit
-  - Delete
-  - Can add and delete comments
+**You can make you own user !!!**
+
+![Alt text](/documentationImages/register.png?raw=true)
+
+**You can make you own blog**
+
+![Alt text](/documentationImages/blog.png?raw=true)
+
+### You can make a lot more things so why don't you try it out
 
 ## Installation   
-How to install and start the application.
+**Here is a quick and easy guide on how to install the required dependecies**
 
-1. **Download the code or clone the repository**
-2. **Install Dependancies**
+**Make sure you download the code or clone the repo before installing**
 
 * ***Server***
 ```bash
@@ -33,7 +34,9 @@ How to install and start the application.
    cd client
    npm install
 ```
-3. **How to start the application**
+
+## How to start it ???   
+**Make sure you have installed all the dependancies before you start it**
 
 * ***Server***   
 ```bash 
@@ -49,5 +52,7 @@ How to install and start the application.
 ---
 
 ## Requirements   
+**You need to have those installed on you pc before you can start the application**
+
 - **Node.js**
 - **MongoDB**
