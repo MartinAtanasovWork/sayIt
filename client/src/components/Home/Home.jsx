@@ -18,7 +18,7 @@ export default function Home({ show }) {
 
     return (
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
-            {articles.map(article => distributeArticles(article))}
+            {articles && articles.map(article => distributeArticles(article))}
         </div>
     )
 }

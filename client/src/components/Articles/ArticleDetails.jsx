@@ -21,6 +21,10 @@ export default function ArticleDetails() {
         if (isLogged && article) {
             setIsOwner(loggedInUserId === article.author);
         }
+
+        return () => {
+            setIsOwner();
+        }
     }, [isLogged, article, loggedInUserId]);
 
     useEffect(() => {
@@ -29,7 +33,11 @@ export default function ArticleDetails() {
 
             setComments(comments);
         })();
-    }, [loadComments]);
+
+        return () => {
+            setComments();
+        };
+    }, [loadComments, articleId]);
 
     function commentChangeHandler(e) {
         setNewComment(e.target.value);
@@ -39,9 +47,9 @@ export default function ArticleDetails() {
         navigate("/articles/edit/" + articleId);
     }
 
-    function deleteHandler() {
+    async function deleteHandler() {
         if (confirm("Are you sure you want to delete your article?")) {
-            deleteArticle(articleId);
+            await deleteArticle(articleId);
             navigate("/");
         }
     }
@@ -77,7 +85,7 @@ export default function ArticleDetails() {
                         />
                     </div>
                 }
-                
+
                 <div className="flex items-center justify-between mb-4">
                     <h1 className="text-4xl font-bold text-green-600">
                         {article.title}

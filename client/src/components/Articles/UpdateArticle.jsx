@@ -39,6 +39,11 @@ export default function EditArticle() {
 
         setPreview(article.img);
         setImage(article.img);
+
+        return () => {
+            setPreview();
+            setImage();
+        }
     }, [article]);
 
     function changeImageHandler(e) {

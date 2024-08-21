@@ -23,7 +23,11 @@ export function useArticle() {
                         break;
                 }
 
-                setArticles(data);
+               setArticles(data);
+
+                return () => {
+                    setArticles()
+                }
             })()
         }, [show]);
 
@@ -37,6 +41,10 @@ export function useArticle() {
 
                 setArticles(data);
             })()
+
+            return () => {
+                setArticles()
+            }
         }, [topic]);
 
         return articles;
@@ -49,6 +57,10 @@ export function useArticle() {
 
                 setArticle(data[0]);
             })()
+
+            return () => {
+                setArticle()
+            }
         }, [id]);
 
         return article;

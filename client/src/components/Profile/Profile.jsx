@@ -33,7 +33,7 @@ export default function UserProfile() {
             setSelectedAvatar(userData.avatar);
             setUser(userData);
         })()
-    }, []);
+    }, [currentUser]);
 
     function changeAvatarHandler(avatar) {
         setSelectedAvatar(avatar);
