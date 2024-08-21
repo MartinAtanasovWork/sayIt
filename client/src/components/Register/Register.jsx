@@ -9,7 +9,7 @@ import './validation.css';
 export default function Register() {
     let { register } = useAuthentication();
     let navigate = useNavigate();
-
+    
     let { values, changeHandler, submitHandler } = useForm({
         email: "",
         password: "",
